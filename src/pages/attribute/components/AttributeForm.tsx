@@ -4,8 +4,10 @@ import { OptionTags } from "./OptionTags";
 import { ATTRIBUTE_TYPES } from "../../../consts/attribute";
 import { useCreateAttributeMutation } from "../../../store/slice/attributeSlice";
 import type { AttributeType } from "../../../types/attribute";
+import { useTranslation } from "react-i18next";
 
 export function AttributeForm() {
+  const { t } = useTranslation();
   const [createAttribute, { isLoading }] = useCreateAttributeMutation();
   const [name, setName] = useState("");
   const [category, setCategory] = useState("");
@@ -45,10 +47,10 @@ export function AttributeForm() {
         maxWidth: 500,
       }}
     >
-      <Typography variant="h6">New attribute</Typography>
+      <Typography variant="h6">{t("attributes.form.title")}</Typography>
 
       <TextField
-        label="Name"
+        label={t("attributes.form.name")}
         value={name}
         onChange={(e) => setName(e.target.value)}
         required
@@ -56,7 +58,7 @@ export function AttributeForm() {
         size="small"
       />
       <TextField
-        label="Category"
+        label={t("attributes.form.category")}
         value={category}
         onChange={(e) => setCategory(e.target.value)}
         required
@@ -66,7 +68,7 @@ export function AttributeForm() {
 
       <TextField
         select
-        label="Data type"
+        label={t("attributes.form.data_type")}
         value={type}
         onChange={(e) => setType(e.target.value as AttributeType)}
         fullWidth
@@ -89,7 +91,7 @@ export function AttributeForm() {
         disabled={isLoading}
         sx={{ mt: 1 }}
       >
-        add attribute
+        {t("attributes.form.submit_button")}
       </Button>
     </Paper>
   );

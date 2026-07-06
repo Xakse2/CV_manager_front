@@ -1,8 +1,10 @@
 import { Box, TextField, Button, Chip } from "@mui/material";
 import { useState } from "react";
 import type { OptionTagsProps } from "../../../types/attribute";
+import { useTranslation } from "react-i18next";
 
 export function OptionTags({ options, onChange }: OptionTagsProps) {
+  const { t } = useTranslation();
   const [currentOption, setCurrentOption] = useState("");
 
   const handleAdd = () => {
@@ -20,7 +22,7 @@ export function OptionTags({ options, onChange }: OptionTagsProps) {
     <Box sx={{ display: "flex", flexDirection: "column", gap: 2, mt: 1 }}>
       <Box sx={{ display: "flex", gap: 1 }}>
         <TextField
-          label="Answer variant"
+          label={t("attributes.form.option_placeholder")}
           size="small"
           value={currentOption}
           onChange={(e) => setCurrentOption(e.target.value)}
@@ -29,7 +31,7 @@ export function OptionTags({ options, onChange }: OptionTagsProps) {
           }
         />
         <Button variant="outlined" onClick={handleAdd}>
-          Add
+          {t("attributes.form.add_button")}
         </Button>
       </Box>
       <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1 }}>

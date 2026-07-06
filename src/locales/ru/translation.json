@@ -1,0 +1,22 @@
+{
+  "attributes": {
+    "title": "Библиотека атрибутов",
+    "error_loading": "Не удалось загрузить атрибуты",
+    "form": {
+      "title": "Новый атрибут",
+      "name": "Название",
+      "category": "Категория",
+      "data_type": "Тип данных",
+      "option_placeholder": "Вариант ответа",
+      "add_button": "Добавить",
+      "submit_button": "добавить атрибут"
+    },
+    "table": {
+      "name": "Название",
+      "category": "Категория",
+      "type": "Тип",
+      "options": "Опции",
+      "actions": "Действия"
+    }
+  }
+}

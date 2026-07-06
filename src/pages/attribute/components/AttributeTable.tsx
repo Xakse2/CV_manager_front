@@ -13,8 +13,10 @@ import {
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useDeleteAttributeMutation } from "../../../store/slice/attributeSlice";
 import type { AttributeTableProps } from "../../../types/attribute";
+import { useTranslation } from "react-i18next";
 
 export function AttributeTable({ attributes }: AttributeTableProps) {
+  const { t } = useTranslation();
   const [deleteAttribute] = useDeleteAttributeMutation();
 
   return (
@@ -23,19 +25,19 @@ export function AttributeTable({ attributes }: AttributeTableProps) {
         <TableHead sx={{ bgcolor: "action.hover" }}>
           <TableRow>
             <TableCell>
-              <strong>Name</strong>
+              <strong>{t("attributes.table.name")}</strong>
             </TableCell>
             <TableCell>
-              <strong>Category</strong>
+              <strong>{t("attributes.table.category")}</strong>
             </TableCell>
             <TableCell>
-              <strong>Type</strong>
+              <strong>{t("attributes.table.type")}</strong>
             </TableCell>
             <TableCell>
-              <strong>Options</strong>
+              <strong>{t("attributes.table.options")}</strong>
             </TableCell>
             <TableCell align="right">
-              <strong>Actions</strong>
+              <strong>{t("attributes.table.actions")}</strong>
             </TableCell>
           </TableRow>
         </TableHead>

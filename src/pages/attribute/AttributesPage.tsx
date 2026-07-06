@@ -2,29 +2,28 @@ import { AttributeForm } from "./components/AttributeForm";
 import { AttributeTable } from "./components/AttributeTable";
 import { useGetAttributesQuery } from "../../store/slice/attributeSlice";
 import { Box, Typography, Grid, CircularProgress, Alert } from "@mui/material";
+import { useTranslation } from "react-i18next";
 
-export const AttributesPage: React.FC = () => {
+export function AttributesPage() {
+  const { t } = useTranslation();
   const { data: attributes = [], isLoading, isError } = useGetAttributesQuery();
 
   return (
     <Box sx={{ p: 4, maxWidth: 1200, mx: "auto" }}>
       <Typography variant="h4" sx={{ mb: 4, fontWeight: "bold" }}>
-        Библиотека атрибутов
+        {t("attributes.title")}
       </Typography>
 
       {isError && (
         <Alert severity="error" sx={{ mb: 3 }}>
-          Не удалось загрузить атрибуты
+          {t("attributes.error")}
         </Alert>
       )}
 
       <Grid container spacing={4}>
-        {/* Левая колонка — Форма */}
         <Grid size={{ xs: 12, md: 4 }}>
           <AttributeForm />
         </Grid>
-
-        {/* Правая колонка — Таблица со списком */}
         <Grid size={{ xs: 12, md: 8 }}>
           {isLoading ? (
             <Box sx={{ display: "flex", justifyContent: "center", p: 4 }}>
@@ -37,4 +36,4 @@ export const AttributesPage: React.FC = () => {
       </Grid>
     </Box>
   );
-};
+}
