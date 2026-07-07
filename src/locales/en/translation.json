@@ -1,0 +1,22 @@
+{
+  "attributes": {
+    "title": "Attribute Library",
+    "error_loading": "Failed to load attributes",
+    "form": {
+      "title": "New Attribute",
+      "name": "Name",
+      "category": "Category",
+      "data_type": "Data Type",
+      "option_placeholder": "Option value",
+      "add_button": "Add",
+      "submit_button": "Create attributes"
+    },
+    "table": {
+      "name": "Name",
+      "category": "Category",
+      "type": "Type",
+      "options": "Options",
+      "actions": "Actions"
+    }
+  }
+}
