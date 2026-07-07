@@ -18,11 +18,5 @@
       "options": "Options",
       "actions": "Actions"
     }
-  },
-  "attribute_types": {
-    "STRING": "Текстовое поле",
-    "NUMBER": "Число",
-    "BOOLEAN": "Логическое (Да/Нет)",
-    "DROPDOWN": "Выпадающий список"
   }
 }

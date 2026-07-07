@@ -1,6 +1,7 @@
 import { Box } from "@mui/material";
 import { LanguageSwitcher } from "./components/LanguageSwitcher/LanguageSwitcher";
-import { AttributesPage } from "./pages/attribute/AttributesPage";
+import { RouterProvider } from "react-router-dom";
+import { router } from "./routes";
 
 function App() {
   return (
@@ -8,8 +9,7 @@ function App() {
       <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
         <LanguageSwitcher />
       </Box>
-
-      <AttributesPage />
+      <RouterProvider router={router} />;
     </Box>
   );
 }
