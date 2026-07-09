@@ -7,9 +7,9 @@
       "name": "Название",
       "category": "Категория",
       "data_type": "Тип данных",
-      "option_placeholder": "Вариант ответа",
+      "option_placeholder": "Значение опции",
       "add_button": "Добавить",
-      "submit_button": "добавить атрибут"
+      "submit_button": "Создать атрибуты"
     },
     "table": {
       "name": "Название",
@@ -17,6 +17,41 @@
       "type": "Тип",
       "options": "Опции",
       "actions": "Действия"
+    }
+  },
+  "common": {
+    "buttons": {
+      "back": "Назад к списку"
+    }
+  },
+  "vacancies": {
+    "title": "Список вакансий",
+    "create_title": "Создание новой вакансии",
+    "create_button": "Создать вакансию",
+    "empty_list": "Вакансий не найдено. Самое время создать первую!",
+    "loading_error": "Ошибка при загрузке атрибутов.",
+    "requirements_title": "Требования к вакансии",
+    "no_requirements": "Требования еще не добавлены. Нажмите кнопку, чтобы добавить первое.",
+    "form": {
+      "main_info": "Основная информация",
+      "title": "Название вакансии",
+      "company": "Компания / Департамент",
+      "salary_from": "Зарплата от",
+      "salary_to": "Зарплата до",
+      "description": "Описание вакансии",
+      "requirements_placeholder": "Конструктор требований (Атрибуты будут подключены здесь)",
+      "submit": "Сохранить вакансию",
+      "labels": {
+        "add_requirement": "Добавить требование",
+        "attribute": "Характеристика",
+        "select_placeholder": "Выберите атрибут...",
+        "value_text": "Значение (текст)",
+        "value_number": "Значение (число)",
+        "value_boolean": "Значение (да/нет)",
+        "value_dropdown": "Выберите вариант",
+        "boolean_yes": "Да",
+        "boolean_no": "Нет"
+      }
     }
   }
 }

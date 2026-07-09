@@ -18,5 +18,40 @@
       "options": "Options",
       "actions": "Actions"
     }
+  },
+  "common": {
+    "buttons": {
+      "back": "Back to list"
+    }
+  },
+  "vacancies": {
+    "title": "Vacancies List",
+    "create_title": "Create New Vacancy",
+    "create_button": "Create Vacancy",
+    "empty_list": "No vacancies found. It's time to create the first one!",
+    "loading_error": "Error loading attributes.",
+    "requirements_title": "Vacancy Requirements",
+    "no_requirements": "No requirements added yet. Click the button to add the first one.",
+    "form": {
+      "main_info": "Main Information",
+      "title": "Vacancy Title",
+      "company": "Company / Department",
+      "salary_from": "Salary From",
+      "salary_to": "Salary To",
+      "description": "Vacancy Description",
+      "requirements_placeholder": "Requirements Builder (Attributes will be connected here)",
+      "submit": "Save Vacancy",
+      "labels": {
+        "add_requirement": "Add requirement",
+        "attribute": "Attribute",
+        "select_placeholder": "Select attribute...",
+        "value_text": "Value (text)",
+        "value_number": "Value (number)",
+        "value_boolean": "Value (yes/no)",
+        "value_dropdown": "Select option",
+        "boolean_yes": "Yes",
+        "boolean_no": "No"
+      }
+    }
   }
 }
