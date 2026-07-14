@@ -1,4 +1,4 @@
-import type { AttributeType } from "../types/attribute";
+import type { AttributeCategory, AttributeType } from "../types/attribute";
 
 export const ATTRIBUTE_TYPES: AttributeType[] = [
   "STRING",
@@ -9,4 +9,12 @@ export const ATTRIBUTE_TYPES: AttributeType[] = [
   "PERIOD",
   "BOOLEAN",
   "DROPDOWN",
+];
+
+export const ATTRIBUTE_CATEGORIES: AttributeCategory[] = [
+  "PERSONAL",
+  "EDUCATION",
+  "WORK_EXPERIENCE",
+  "SKILLS",
+  "LANGUAGES",
 ];
