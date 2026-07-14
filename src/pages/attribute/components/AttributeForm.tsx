@@ -1,7 +1,18 @@
 import { useState, type SubmitEvent } from "react";
-import { TextField, Button, MenuItem, Typography, Paper } from "@mui/material";
+import {
+  TextField,
+  Button,
+  MenuItem,
+  Typography,
+  Paper,
+  FormControlLabel,
+  Checkbox,
+} from "@mui/material";
 import { OptionTags } from "./OptionTags";
-import { ATTRIBUTE_TYPES } from "../../../consts/attribute";
+import {
+  ATTRIBUTE_CATEGORIES,
+  ATTRIBUTE_TYPES,
+} from "../../../consts/attribute";
 import { useCreateAttributeMutation } from "../../../store/slice/attributeSlice";
 import type { AttributeType } from "../../../types/attribute";
 import { useTranslation } from "react-i18next";
@@ -13,6 +24,7 @@ export function AttributeForm() {
   const [category, setCategory] = useState("");
   const [type, setType] = useState<AttributeType>("STRING");
   const [options, setOptions] = useState<string[]>([]);
+  const [isSystem, setIsSystem] = useState(false);
 
   const handleSubmit = async (e: SubmitEvent) => {
     e.preventDefault();
@@ -24,12 +36,14 @@ export function AttributeForm() {
         type,
         category,
         options: type === "DROPDOWN" ? options : [],
+        isSystem,
       }).unwrap();
 
       setName("");
       setCategory("");
       setType("STRING");
       setOptions([]);
+      setIsSystem(false);
     } catch (err) {
       console.error("create error:", err);
     }
@@ -58,13 +72,20 @@ export function AttributeForm() {
         size="small"
       />
       <TextField
+        select
         label={t("attributes.form.category")}
         value={category}
         onChange={(e) => setCategory(e.target.value)}
         required
         fullWidth
         size="small"
-      />
+      >
+        {ATTRIBUTE_CATEGORIES.map((categoryItem) => (
+          <MenuItem key={categoryItem} value={categoryItem}>
+            {t(`attributes.categories.${categoryItem}`, categoryItem)}
+          </MenuItem>
+        ))}
+      </TextField>
 
       <TextField
         select
@@ -84,6 +105,17 @@ export function AttributeForm() {
       {type === "DROPDOWN" && (
         <OptionTags options={options} onChange={setOptions} />
       )}
+
+      <FormControlLabel
+        control={
+          <Checkbox
+            checked={isSystem}
+            onChange={(e) => setIsSystem(e.target.checked)}
+            color="primary"
+          />
+        }
+        label={t("attributes.form.is_system")}
+      />
 
       <Button
         type="submit"

@@ -44,7 +44,7 @@ export function CreateVacancyPage() {
         )}
 
         {!isLoading && !error && (
-          <VacancyForm availableAttributes={attributes} />
+          <VacancyForm mode="create" availableAttributes={attributes} />
         )}
       </Box>
     </Box>

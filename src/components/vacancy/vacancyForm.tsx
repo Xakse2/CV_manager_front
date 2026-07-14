@@ -1,24 +1,59 @@
 import { useState, type SubmitEvent } from "react";
-import { TextField, Button, Paper, Typography, Box, Grid } from "@mui/material";
+import {
+  TextField,
+  Button,
+  Paper,
+  Typography,
+  Grid,
+  CircularProgress,
+} from "@mui/material";
 import { useTranslation } from "react-i18next";
 import type {
+  SelectedAttribute,
   SelectedRequirement,
-  VacancyFormProps,
 } from "../../types/attribute";
 import { RequirementsSection } from "./components/requirementsSection";
+import {
+  useCreateVacancyMutation,
+  useUpdateVacancyByIdMutation,
+} from "../../store/slice/vacancySlice";
+import type { VacancyFormProps } from "../../types/vacancy";
 
-export function VacancyForm({ availableAttributes }: VacancyFormProps) {
+export function VacancyForm({
+  availableAttributes,
+  mode,
+  initialData,
+}: VacancyFormProps) {
   const { t } = useTranslation();
 
-  const [title, setTitle] = useState("");
-  const [company, setCompany] = useState("");
-  const [description, setDescription] = useState("");
-  const [salaryFrom, setSalaryFrom] = useState("");
-  const [salaryTo, setSalaryTo] = useState("");
-  const [requirements, setRequirements] = useState<SelectedRequirement[]>([]);
-
+  const [createVacancy, { isLoading }] = useCreateVacancyMutation();
+  const [updateVacancy] = useUpdateVacancyByIdMutation();
+  const [title, setTitle] = useState(initialData?.title ?? "");
+  const [company, setCompany] = useState(initialData?.company ?? "");
+  const [description, setDescription] = useState(
+    initialData?.description ?? ""
+  );
+  const [salaryFrom, setSalaryFrom] = useState(
+    initialData?.salaryFrom?.toString() ?? ""
+  );
+  const [salaryTo, setSalaryTo] = useState(
+    initialData?.salaryTo?.toString() ?? ""
+  );
+  const [attributes, setAttributes] = useState<SelectedAttribute[]>(
+    initialData?.PositionAttribute ?? []
+  );
+  const [requirements, setRequirements] = useState<SelectedRequirement[]>(
+    initialData?.PositionAccessRule ?? []
+  );
   const handleAddRequirement = () => {
-    setRequirements([...requirements, { attributeId: "", value: "" }]);
+    setRequirements([
+      ...requirements,
+      {
+        attributeId: "",
+        operator: "",
+        value: "",
+      },
+    ]);
   };
 
   const handleRemoveRequirement = (index: number) => {
@@ -39,21 +74,33 @@ export function VacancyForm({ availableAttributes }: VacancyFormProps) {
     setRequirements(updated);
   };
 
-  const handleSubmit = (e: SubmitEvent) => {
+  const handleSubmit = async (e: SubmitEvent) => {
     e.preventDefault();
-
+    console.log(mode);
     const vacancyData = {
       title: title.trim(),
       company: company.trim(),
       description: description.trim(),
       salaryFrom: salaryFrom ? Number(salaryFrom) : null,
       salaryTo: salaryTo ? Number(salaryTo) : null,
-      requirements: requirements.filter(
-        (requirement) => requirement.attributeId
-      ),
+      attributes,
+      requirements,
+      version: initialData?.version ?? 1,
     };
+    try {
+      if (mode === "create") {
+        await createVacancy(vacancyData).unwrap();
+      } else {
+        if (!initialData) return;
 
-    console.log("Submit vacancy data:", vacancyData);
+        await updateVacancy({
+          id: initialData.id,
+          vacancy: vacancyData,
+        }).unwrap();
+      }
+    } catch (err) {
+      console.error("Failed to save vacancy:", err);
+    }
   };
 
   return (
@@ -118,7 +165,6 @@ export function VacancyForm({ availableAttributes }: VacancyFormProps) {
         fullWidth
         size="small"
       />
-
       <RequirementsSection
         requirements={requirements}
         availableAttributes={availableAttributes}
@@ -132,8 +178,15 @@ export function VacancyForm({ availableAttributes }: VacancyFormProps) {
         color="primary"
         size="large"
         sx={{ alignSelf: "flex-end" }}
+        disabled={isLoading}
       >
-        {t("vacancies.create_button")}
+        {isLoading ? (
+          <CircularProgress size={24} color="inherit" />
+        ) : mode === "create" ? (
+          t("vacancies.create_button")
+        ) : (
+          t("vacancies.update_button")
+        )}
       </Button>
     </Paper>
   );

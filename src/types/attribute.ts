@@ -1,3 +1,5 @@
+import type { VacancyResponse } from "./vacancy";
+
 export type AttributeType =
   | "STRING"
   | "TEXT"
@@ -14,6 +16,7 @@ export interface Attribute {
   type: AttributeType;
   category: string;
   options: string[];
+  isSystem: boolean;
 }
 
 export interface CreateAttributeInput {
@@ -21,6 +24,7 @@ export interface CreateAttributeInput {
   type: AttributeType;
   category: string;
   options: string[];
+  isSystem: boolean;
 }
 
 export interface OptionTagsProps {
@@ -30,10 +34,6 @@ export interface OptionTagsProps {
 
 export interface AttributeTableProps {
   attributes: Attribute[];
-}
-
-export interface VacancyFormProps {
-  availableAttributes: Attribute[];
 }
 
 export interface RequirementRowProps {
@@ -46,9 +46,14 @@ export interface RequirementRowProps {
 
 export interface SelectedRequirement {
   attributeId: string;
-  value: any;
+  operator: string;
+  value: string;
 }
 
+export interface SelectedAttribute {
+  attributeId: string;
+  required: boolean;
+}
 export interface RequirementsSectionProps {
   requirements: SelectedRequirement[];
   availableAttributes: Attribute[];
@@ -56,3 +61,6 @@ export interface RequirementsSectionProps {
   onRemove: (index: number) => void;
   onChange: (index: number, key: "attributeId" | "value", val: any) => void;
 }
+
+export type AttributeCategory =
+  "PERSONAL" | "EDUCATION" | "WORK_EXPERIENCE" | "SKILLS" | "LANGUAGES";

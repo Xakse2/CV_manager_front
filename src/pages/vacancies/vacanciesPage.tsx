@@ -1,9 +1,12 @@
-import { Box, Typography, Button } from "@mui/material";
+import { Box, Typography, Button, CircularProgress } from "@mui/material";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { useGetVacanciesQuery } from "../../store/slice/vacancySlice";
+import { VacanciesList } from "./components/VacanciesList";
 
 export function VacanciesPage() {
   const { t } = useTranslation();
+  const { data: vacancies = [], isLoading, isError } = useGetVacanciesQuery();
 
   return (
     <Box sx={{ p: 4, display: "flex", flexDirection: "column", gap: 3 }}>
@@ -26,9 +29,21 @@ export function VacanciesPage() {
           </Button>
         </Box>
       </Box>
-      <Typography variant="body1" sx={{ color: "text.secondary", mt: 2 }}>
-        {t("vacancies.empty_list")}
-      </Typography>
+      {isLoading ? (
+        <Box sx={{ display: "flex", justifyContent: "center", mt: 4 }}>
+          <CircularProgress />
+        </Box>
+      ) : isError ? (
+        <Typography
+          color="error"
+          variant="body1"
+          sx={{ textAlign: "center", mt: 2 }}
+        >
+          {t("vacancies.loading_error")}
+        </Typography>
+      ) : (
+        <VacanciesList vacancies={vacancies} />
+      )}
     </Box>
   );
 }
