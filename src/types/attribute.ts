@@ -1,5 +1,3 @@
-import type { VacancyResponse } from "./vacancy";
-
 export type AttributeType =
   | "STRING"
   | "TEXT"

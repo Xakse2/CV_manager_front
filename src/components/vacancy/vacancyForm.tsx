@@ -39,7 +39,7 @@ export function VacancyForm({
   const [salaryTo, setSalaryTo] = useState(
     initialData?.salaryTo?.toString() ?? ""
   );
-  const [attributes, setAttributes] = useState<SelectedAttribute[]>(
+  const [attributes] = useState<SelectedAttribute[]>(
     initialData?.PositionAttribute ?? []
   );
   const [requirements, setRequirements] = useState<SelectedRequirement[]>(
