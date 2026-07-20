@@ -53,5 +53,53 @@
         "boolean_no": "No"
       }
     }
+  },
+  "menu": {
+    "catalog": {
+      "home": "Home",
+      "vacancy": "Vacancies",
+      "attribute": "Attributes",
+      "login": "Login",
+      "registration": "Registration",
+      "profile": "Profile"
+    }
+  },
+  "login": {
+    "title": "Sign In",
+    "subtitle": "Please log into your account",
+    "submit_button": "Login",
+    "fields": {
+      "email": "Email",
+      "password": "Password"
+    }
+  },
+  "register": {
+    "title": "Registration",
+    "subtitle": "Create a new account to get started",
+    "submit_button": "Register",
+    "fields": {
+      "role": "Role",
+      "first_name": "First Name",
+      "last_name": "Last Name",
+      "email": "Email",
+      "password": "Password",
+      "confirm_password": "Confirm Password"
+    },
+    "roles": {
+      "candidate": "Candidate",
+      "recruiter": "Recruiter"
+    }
+  },
+  "profile": {
+    "fields": {
+      "first_name": "First Name",
+      "last_name": "Last Name",
+      "email": "Email"
+    },
+    "buttons": {
+      "edit": "Edit Profile",
+      "cancel": "Cancel",
+      "save": "Save Changes"
+    }
   }
 }

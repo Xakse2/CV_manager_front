@@ -1,5 +1,5 @@
 import { Link, useParams } from "react-router-dom";
-import { useGetVacancyByIdQuery } from "../../store/slice/vacancySlice";
+import { useGetVacancyByIdQuery } from "../../store/slice/api/vacancyApi";
 import { VacancyForm } from "../../components/vacancy/vacancyForm";
 import CircularProgress from "@mui/material/CircularProgress";
 import { Box, Button, Typography } from "@mui/material";

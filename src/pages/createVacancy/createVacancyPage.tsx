@@ -2,7 +2,7 @@ import { Box, Typography, Button, CircularProgress } from "@mui/material";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { VacancyForm } from "../../components/vacancy/vacancyForm";
-import { useGetAttributesQuery } from "../../store/slice/attributeSlice";
+import { useGetAttributesQuery } from "../../store/slice/api/attributeApi";
 
 export function CreateVacancyPage() {
   const { t } = useTranslation();

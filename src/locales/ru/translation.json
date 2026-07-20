@@ -26,10 +26,10 @@
   },
   "vacancies": {
     "title": "Список вакансий",
-    "create_title": "Создание новой вакансии",
+    "create_title": "Создать новую вакансию",
     "create_button": "Создать вакансию",
     "empty_list": "Вакансий не найдено. Самое время создать первую!",
-    "loading_error": "Ошибка при загрузке атрибутов.",
+    "loading_error": "Ошибка загрузки атрибутов.",
     "requirements_title": "Требования к вакансии",
     "no_requirements": "Требования еще не добавлены. Нажмите кнопку, чтобы добавить первое.",
     "form": {
@@ -39,19 +39,67 @@
       "salary_from": "Зарплата от",
       "salary_to": "Зарплата до",
       "description": "Описание вакансии",
-      "requirements_placeholder": "Конструктор требований (Атрибуты будут подключены здесь)",
+      "requirements_placeholder": "Конструктор требований (сюда будут подключаться атрибуты)",
       "submit": "Сохранить вакансию",
       "labels": {
         "add_requirement": "Добавить требование",
-        "attribute": "Характеристика",
+        "attribute": "Атрибут",
         "select_placeholder": "Выберите атрибут...",
         "value_text": "Значение (текст)",
         "value_number": "Значение (число)",
         "value_boolean": "Значение (да/нет)",
-        "value_dropdown": "Выберите вариант",
+        "value_dropdown": "Выберите опцию",
         "boolean_yes": "Да",
         "boolean_no": "Нет"
       }
+    }
+  },
+  "menu": {
+    "catalog": {
+      "home": "Главная",
+      "vacancy": "Вакансии",
+      "attribute": "Атрибуты",
+      "login": "Вход",
+      "registration": "Регистрация",
+      "profile": "Профиль"
+    }
+  },
+  "login": {
+    "title": "Вход в систему",
+    "subtitle": "Пожалуйста, войдите в свой аккаунт",
+    "submit_button": "Войти",
+    "fields": {
+      "email": "Email",
+      "password": "Пароль"
+    }
+  },
+  "register": {
+    "title": "Регистрация",
+    "subtitle": "Создайте новый аккаунт, чтобы начать",
+    "submit_button": "Зарегистрироваться",
+    "fields": {
+      "role": "Роль",
+      "first_name": "Имя",
+      "last_name": "Фамилия",
+      "email": "Email",
+      "password": "Пароль",
+      "confirm_password": "Подтвердите пароль"
+    },
+    "roles": {
+      "candidate": "Кандидат",
+      "recruiter": "Рекрутер"
+    }
+  },
+  "profile": {
+    "fields": {
+      "first_name": "Имя",
+      "last_name": "Фамилия",
+      "email": "Email"
+    },
+    "buttons": {
+      "edit": "Редактировать профиль",
+      "cancel": "Отмена",
+      "save": "Сохранить изменения"
     }
   }
 }

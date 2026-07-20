@@ -1,11 +1,10 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import type { Attribute, CreateAttributeInput } from "../../types/attribute";
+import { createApi } from "@reduxjs/toolkit/query/react";
+import type { Attribute, CreateAttributeInput } from "../../../types/attribute";
+import { baseQueryWithReauth } from "../../baseQueryWithReauth";
 
 export const attributeApi = createApi({
   reducerPath: "attributeApi",
-  baseQuery: fetchBaseQuery({
-    baseUrl: import.meta.env.VITE_API_URL || "http://localhost:3000/api",
-  }),
+  baseQuery: baseQueryWithReauth,
   tagTypes: ["Attribute"],
   endpoints: (builder) => ({
     getAttributes: builder.query<Attribute[], void>({

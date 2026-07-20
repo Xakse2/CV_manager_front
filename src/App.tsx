@@ -1,15 +1,14 @@
 import { Box } from "@mui/material";
-import { LanguageSwitcher } from "./components/LanguageSwitcher/LanguageSwitcher";
 import { RouterProvider } from "react-router-dom";
 import { router } from "./routes";
+import "./i18n";
+import { useMeQuery } from "./store/slice/api/authApi";
 
 function App() {
+  useMeQuery();
   return (
     <Box sx={{ p: 4, display: "flex", flexDirection: "column", gap: 3 }}>
-      <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
-        <LanguageSwitcher />
-      </Box>
-      <RouterProvider router={router} />;
+      <RouterProvider router={router} />
     </Box>
   );
 }

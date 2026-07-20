@@ -15,12 +15,14 @@ export function LanguageSwitcher() {
       <Button
         variant={currentLanguage === "ru" ? "contained" : "outlined"}
         onClick={() => changeLanguage("ru")}
+        color="inherit"
       >
         RU
       </Button>
       <Button
         variant={currentLanguage === "en" ? "contained" : "outlined"}
         onClick={() => changeLanguage("en")}
+        color="inherit"
       >
         EN
       </Button>

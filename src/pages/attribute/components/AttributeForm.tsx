@@ -9,11 +9,8 @@ import {
   Checkbox,
 } from "@mui/material";
 import { OptionTags } from "./OptionTags";
-import {
-  ATTRIBUTE_CATEGORIES,
-  ATTRIBUTE_TYPES,
-} from "../../../consts/attribute";
-import { useCreateAttributeMutation } from "../../../store/slice/attributeSlice";
+import { ATTRIBUTE_CATEGORIES, ATTRIBUTE_TYPES } from "../../../consts/consts";
+import { useCreateAttributeMutation } from "../../../store/slice/api/attributeApi";
 import type { AttributeType } from "../../../types/attribute";
 import { useTranslation } from "react-i18next";
 
