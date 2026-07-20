@@ -15,7 +15,7 @@ import {
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useTranslation } from "react-i18next";
 
-import { useDeleteAttributeMutation } from "../../../store/slice/attributeSlice";
+import { useDeleteAttributeMutation } from "../../../store/slice/api/attributeApi";
 import type { AttributeTableProps } from "../../../types/attribute";
 
 export function AttributeTable({ attributes }: AttributeTableProps) {

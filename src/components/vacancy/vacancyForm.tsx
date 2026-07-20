@@ -16,7 +16,7 @@ import { RequirementsSection } from "./components/requirementsSection";
 import {
   useCreateVacancyMutation,
   useUpdateVacancyByIdMutation,
-} from "../../store/slice/vacancySlice";
+} from "../../store/slice/api/vacancyApi";
 import type { VacancyFormProps } from "../../types/vacancy";
 
 export function VacancyForm({

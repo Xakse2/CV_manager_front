@@ -1,7 +1,7 @@
 import { Box, Typography, Button, CircularProgress } from "@mui/material";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { useGetVacanciesQuery } from "../../store/slice/vacancySlice";
+import { useGetVacanciesQuery } from "../../store/slice/api/vacancyApi";
 import { VacanciesList } from "./components/VacanciesList";
 
 export function VacanciesPage() {

@@ -16,7 +16,7 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import SendIcon from "@mui/icons-material/Send";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
-import { useGetVacancyByIdQuery } from "../../store/slice/vacancySlice";
+import { useGetVacancyByIdQuery } from "../../store/slice/api/vacancyApi";
 import { useTranslation } from "react-i18next";
 import { useState } from "react";
 

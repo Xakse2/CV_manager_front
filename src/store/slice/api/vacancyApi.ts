@@ -1,11 +1,10 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import type { CreateVacancyDto, VacancyResponse } from "../../types/vacancy";
+import { createApi } from "@reduxjs/toolkit/query/react";
+import type { CreateVacancyDto, VacancyResponse } from "../../../types/vacancy";
+import { baseQueryWithReauth } from "../../baseQueryWithReauth";
 
 export const vacanciesApi = createApi({
   reducerPath: "vacanciesApi",
-  baseQuery: fetchBaseQuery({
-    baseUrl: import.meta.env.VITE_API_URL || "http://localhost:3000/api",
-  }),
+  baseQuery: baseQueryWithReauth,
   tagTypes: ["Vacancies"],
   endpoints: (builder) => ({
     createVacancy: builder.mutation<void, CreateVacancyDto>({

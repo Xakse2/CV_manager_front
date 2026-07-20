@@ -1,6 +1,6 @@
 import { AttributeForm } from "./components/AttributeForm";
 import { AttributeTable } from "./components/AttributeTable";
-import { useGetAttributesQuery } from "../../store/slice/attributeSlice";
+import { useGetAttributesQuery } from "../../store/slice/api/attributeApi";
 import { Box, Typography, Grid, CircularProgress, Alert } from "@mui/material";
 import { useTranslation } from "react-i18next";
 
