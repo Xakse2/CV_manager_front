@@ -1,23 +1,25 @@
 import { useState, type SubmitEvent } from "react";
 import {
-  TextField,
+  Typography,
   Button,
   Paper,
-  Typography,
-  Grid,
   CircularProgress,
+  TextField,
+  Grid,
+  Alert,
 } from "@mui/material";
 import { useTranslation } from "react-i18next";
-import type {
-  SelectedAttribute,
-  SelectedRequirement,
-} from "../../types/attribute";
-import { RequirementsSection } from "./components/requirementsSection";
+
 import {
   useCreateVacancyMutation,
   useUpdateVacancyByIdMutation,
 } from "../../store/slice/api/vacancyApi";
+
 import type { VacancyFormProps } from "../../types/vacancy";
+
+import { AttributesSection } from "./components/attributesSection";
+import { RequirementsSection } from "./components/requirementsSection";
+import { useVacancyForm } from "../../hooks/useVacancyForm";
 
 export function VacancyForm({
   availableAttributes,
@@ -25,68 +27,59 @@ export function VacancyForm({
   initialData,
 }: VacancyFormProps) {
   const { t } = useTranslation();
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
-  const [createVacancy, { isLoading }] = useCreateVacancyMutation();
-  const [updateVacancy] = useUpdateVacancyByIdMutation();
-  const [title, setTitle] = useState(initialData?.title ?? "");
-  const [company, setCompany] = useState(initialData?.company ?? "");
-  const [description, setDescription] = useState(
-    initialData?.description ?? ""
-  );
-  const [salaryFrom, setSalaryFrom] = useState(
-    initialData?.salaryFrom?.toString() ?? ""
-  );
-  const [salaryTo, setSalaryTo] = useState(
-    initialData?.salaryTo?.toString() ?? ""
-  );
-  const [attributes] = useState<SelectedAttribute[]>(
-    initialData?.PositionAttribute ?? []
-  );
-  const [requirements, setRequirements] = useState<SelectedRequirement[]>(
-    initialData?.PositionAccessRule ?? []
-  );
-  const handleAddRequirement = () => {
-    setRequirements([
-      ...requirements,
-      {
-        attributeId: "",
-        operator: "",
-        value: "",
-      },
-    ]);
-  };
+  const [createVacancy, { isLoading: isCreating }] = useCreateVacancyMutation();
+  const [updateVacancy, { isLoading: isUpdating }] =
+    useUpdateVacancyByIdMutation();
 
-  const handleRemoveRequirement = (index: number) => {
-    setRequirements(requirements.filter((_, i) => i !== index));
-  };
+  const isLoading = isCreating || isUpdating;
 
-  const handleRequirementChange = (
-    index: number,
-    key: "attributeId" | "value",
-    val: any
-  ) => {
-    const updated = [...requirements];
-    updated[index] = { ...updated[index], [key]: val };
+  const {
+    title,
+    setTitle,
+    company,
+    setCompany,
+    description,
+    setDescription,
+    salaryFrom,
+    setSalaryFrom,
+    salaryTo,
+    setSalaryTo,
 
-    if (key === "attributeId") {
-      updated[index].value = "";
-    }
-    setRequirements(updated);
-  };
+    selectedAttributes,
+    requirements,
+
+    handleAddAttribute,
+    handleAttributeChange,
+    handleRemoveAttribute,
+
+    handleAddRequirement,
+    handleRequirementChange,
+    handleRemoveRequirement,
+  } = useVacancyForm({ initialData });
 
   const handleSubmit = async (e: SubmitEvent) => {
     e.preventDefault();
-    console.log(mode);
+    setSubmitError(null);
+
     const vacancyData = {
       title: title.trim(),
       company: company.trim(),
       description: description.trim(),
-      salaryFrom: salaryFrom ? Number(salaryFrom) : null,
-      salaryTo: salaryTo ? Number(salaryTo) : null,
-      attributes,
-      requirements,
+
+      salaryFrom: salaryFrom !== "" ? Number(salaryFrom) : null,
+      salaryTo: salaryTo !== "" ? Number(salaryTo) : null,
+
+      attributes: selectedAttributes.filter((item) => item.attributeId),
+
+      requirements: requirements.filter(
+        (item) => item.attributeId && item.value.trim()
+      ),
+
       version: initialData?.version ?? 1,
     };
+
     try {
       if (mode === "create") {
         await createVacancy(vacancyData).unwrap();
@@ -98,8 +91,9 @@ export function VacancyForm({
           vacancy: vacancyData,
         }).unwrap();
       }
-    } catch (err) {
-      console.error("Failed to save vacancy:", err);
+    } catch (error) {
+      console.error("Failed to save vacancy:", error);
+      setSubmitError(t("vacancies.errors.save_failed"));
     }
   };
 
@@ -108,19 +102,27 @@ export function VacancyForm({
       component="form"
       onSubmit={handleSubmit}
       sx={{
-        p: 3,
         display: "flex",
         flexDirection: "column",
         gap: 3,
-        maxWidth: 600,
+        p: 3,
+        maxWidth: 800,
         mx: "auto",
       }}
     >
       <Typography variant="h6">{t("vacancies.form.main_info")}</Typography>
+
+      {submitError && (
+        <Alert severity="error" onClose={() => setSubmitError(null)}>
+          {submitError}
+        </Alert>
+      )}
+
       <TextField
         label={t("vacancies.form.title")}
         value={title}
         onChange={(e) => setTitle(e.target.value)}
+        disabled={isLoading}
         required
         fullWidth
         size="small"
@@ -130,10 +132,12 @@ export function VacancyForm({
         label={t("vacancies.form.company")}
         value={company}
         onChange={(e) => setCompany(e.target.value)}
+        disabled={isLoading}
         required
         fullWidth
         size="small"
       />
+
       <Grid container spacing={2}>
         <Grid size={6}>
           <TextField
@@ -141,30 +145,44 @@ export function VacancyForm({
             type="number"
             value={salaryFrom}
             onChange={(e) => setSalaryFrom(e.target.value)}
+            disabled={isLoading}
             fullWidth
             size="small"
           />
         </Grid>
+
         <Grid size={6}>
           <TextField
             label={t("vacancies.form.salary_to")}
             type="number"
             value={salaryTo}
             onChange={(e) => setSalaryTo(e.target.value)}
+            disabled={isLoading}
             fullWidth
             size="small"
           />
         </Grid>
       </Grid>
+
       <TextField
         label={t("vacancies.form.description")}
         value={description}
         onChange={(e) => setDescription(e.target.value)}
+        disabled={isLoading}
         multiline
         rows={4}
         fullWidth
         size="small"
       />
+
+      <AttributesSection
+        selectedAttributes={selectedAttributes}
+        availableAttributes={availableAttributes}
+        onAdd={handleAddAttribute}
+        onRemove={handleRemoveAttribute}
+        onChange={handleAttributeChange}
+      />
+
       <RequirementsSection
         requirements={requirements}
         availableAttributes={availableAttributes}
@@ -172,13 +190,13 @@ export function VacancyForm({
         onRemove={handleRemoveRequirement}
         onChange={handleRequirementChange}
       />
+
       <Button
         type="submit"
         variant="contained"
-        color="primary"
         size="large"
-        sx={{ alignSelf: "flex-end" }}
         disabled={isLoading}
+        sx={{ alignSelf: "flex-end" }}
       >
         {isLoading ? (
           <CircularProgress size={24} color="inherit" />

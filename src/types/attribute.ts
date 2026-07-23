@@ -8,20 +8,23 @@ export type AttributeType =
   | "BOOLEAN"
   | "DROPDOWN";
 
+export type AttributeCategory =
+  "PERSONAL" | "EDUCATION" | "WORK_EXPERIENCE" | "SKILLS" | "LANGUAGES";
+
 export interface Attribute {
   id: string;
   name: string;
   type: AttributeType;
-  category: string;
-  options: string[];
+  category: AttributeCategory | string;
+  options?: string[];
   isSystem: boolean;
 }
 
 export interface CreateAttributeInput {
   name: string;
   type: AttributeType;
-  category: string;
-  options: string[];
+  category: AttributeCategory | string;
+  options?: string[];
   isSystem: boolean;
 }
 
@@ -34,14 +37,6 @@ export interface AttributeTableProps {
   attributes: Attribute[];
 }
 
-export interface RequirementRowProps {
-  attributeId: string;
-  value: any;
-  allAttributes: Attribute[];
-  onChange: (key: "attributeId" | "value", val: any) => void;
-  onRemove: () => void;
-}
-
 export interface SelectedRequirement {
   attributeId: string;
   operator: string;
@@ -52,13 +47,26 @@ export interface SelectedAttribute {
   attributeId: string;
   required: boolean;
 }
+
+export interface RequirementRowProps {
+  attributeId: string;
+  value: string | number | boolean | null;
+  allAttributes: Attribute[];
+  onChange: (
+    key: "attributeId" | "value",
+    val: string | number | boolean | null
+  ) => void;
+  onRemove: () => void;
+}
+
 export interface RequirementsSectionProps {
   requirements: SelectedRequirement[];
   availableAttributes: Attribute[];
   onAdd: () => void;
   onRemove: (index: number) => void;
-  onChange: (index: number, key: "attributeId" | "value", val: any) => void;
+  onChange: (
+    index: number,
+    key: "attributeId" | "operator" | "value",
+    val: string | number | boolean | null
+  ) => void;
 }
-
-export type AttributeCategory =
-  "PERSONAL" | "EDUCATION" | "WORK_EXPERIENCE" | "SKILLS" | "LANGUAGES";

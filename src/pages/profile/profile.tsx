@@ -2,11 +2,16 @@ import { useEffect, useState, type SubmitEvent } from "react";
 import { Box, CircularProgress } from "@mui/material";
 import { z } from "zod";
 import { useTranslation } from "react-i18next";
+import { useSelector } from "react-redux";
 
 import { useUpdateProfileMutation } from "../../store/slice/api/userApi";
+import { useGetUserAttributesQuery } from "../../store/slice/api/userAttributeApi";
 import { ProfileForm } from "./components/profileForm";
-import { useSelector } from "react-redux";
+
 import type { RootState } from "../../store/store";
+import { useGetAttributesQuery } from "../../store/slice/api/attributeApi";
+import { useGetMyProjectsQuery } from "../../store/slice/api/projectApi";
+import { useGetMyCVsQuery } from "../../store/slice/api/cvApi";
 
 const profileSchema = z.object({
   firstName: z.string().nonempty("profile.errors.first_name_required"),
@@ -26,6 +31,11 @@ export function ProfilePage() {
 
   const user = useSelector((state: RootState) => state.auth.user);
 
+  const { data: attributes = [], isLoading: attributesLoading } =
+    useGetUserAttributesQuery();
+
+  const { data: libraryAttributes = [] } = useGetAttributesQuery();
+
   const [updateProfile, { isLoading: isUpdating }] = useUpdateProfileMutation();
 
   const [isEditing, setIsEditing] = useState(false);
@@ -36,14 +46,19 @@ export function ProfilePage() {
     email: "",
   });
 
+  const { data: projects = [], isLoading: projectsLoading } =
+    useGetMyProjectsQuery();
+
+  const { data: cvs = [], isLoading: cvsLoading } = useGetMyCVsQuery();
+
   const [errors, setErrors] = useState<ProfileErrors>({});
 
   useEffect(() => {
     if (user) {
       setFormData({
-        firstName: user.firstName,
-        lastName: user.lastName,
-        email: user.email,
+        firstName: user.firstName ?? "",
+        lastName: user.lastName ?? "",
+        email: user.email ?? "",
       });
     }
   }, [user]);
@@ -83,12 +98,9 @@ export function ProfilePage() {
       const formattedErrors: ProfileErrors = {};
 
       result.error.issues.forEach((issue) => {
-        const path = issue.path[0];
+        const path = issue.path[0] as keyof ProfileFormData;
 
-        if (
-          (path === "firstName" || path === "lastName" || path === "email") &&
-          !formattedErrors[path]
-        ) {
+        if (path && !formattedErrors[path]) {
           formattedErrors[path] = issue.message;
         }
       });
@@ -113,9 +125,9 @@ export function ProfilePage() {
 
   const handleCancel = () => {
     setFormData({
-      firstName: user.firstName,
-      lastName: user.lastName,
-      email: user.email,
+      firstName: user.firstName ?? "",
+      lastName: user.lastName ?? "",
+      email: user.email ?? "",
     });
 
     setErrors({});
@@ -127,8 +139,15 @@ export function ProfilePage() {
       formData={isEditing ? formData : user}
       role={user.role}
       techStack={[]}
+      attributes={attributes}
+      libraryAttributes={libraryAttributes}
+      projects={projects}
+      cvs={cvs}
+      onCreateCV={() => {}}
       errors={errors}
-      isLoading={isUpdating}
+      isLoading={
+        isUpdating || attributesLoading || projectsLoading || cvsLoading
+      }
       isEditing={isEditing}
       t={t}
       onChange={handleChange}
