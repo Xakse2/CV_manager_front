@@ -1,10 +1,20 @@
-import { TextField, MenuItem, IconButton, Grid } from "@mui/material";
+import { Grid, IconButton, MenuItem, TextField } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useTranslation } from "react-i18next";
-import type { RequirementRowProps } from "../../../types/attribute";
+import type { Attribute } from "../../../types/attribute";
+
+interface RequirementRowProps {
+  attributeId: string;
+  operator: string;
+  value: string;
+  allAttributes: Attribute[];
+  onChange: (key: "attributeId" | "operator" | "value", value: string) => void;
+  onRemove: () => void;
+}
 
 export function RequirementRow({
   attributeId,
+  operator,
   value,
   allAttributes,
   onChange,
@@ -13,19 +23,53 @@ export function RequirementRow({
   const { t } = useTranslation();
 
   const currentAttribute = allAttributes.find(
-    (attribute) => attribute.id === attributeId
+    (attr) => attr.id === attributeId
   );
 
+  const getOperators = () => {
+    switch (currentAttribute?.type) {
+      case "NUMERIC":
+      case "DATE":
+        return ["=", "!=", ">", "<", ">=", "<="];
+
+      case "BOOLEAN":
+      case "DROPDOWN":
+        return ["=", "!="];
+
+      default:
+        return ["=", "CONTAINS"];
+    }
+  };
+
   return (
-    <Grid container spacing={2} sx={{ alignItems: "center" }}>
-      <Grid size={5}>
+    <Grid
+      container
+      spacing={2}
+      sx={{
+        alignItems: "center",
+        borderRadius: 1,
+        p: 0.5,
+        transition: "background-color 0.2s ease",
+        "& .delete-btn": {
+          opacity: 0,
+          transition: "opacity 0.2s ease",
+        },
+        "&:hover": {
+          backgroundColor: "action.hover",
+        },
+        "&:hover .delete-btn, & .delete-btn:focus-visible": {
+          opacity: 1,
+        },
+      }}
+    >
+      <Grid size={3}>
         <TextField
           select
+          fullWidth
+          size="small"
           label={t("vacancies.form.labels.attribute")}
           value={attributeId}
           onChange={(e) => onChange("attributeId", e.target.value)}
-          fullWidth
-          size="small"
         >
           {allAttributes.map((attribute) => (
             <MenuItem key={attribute.id} value={attribute.id}>
@@ -35,51 +79,97 @@ export function RequirementRow({
         </TextField>
       </Grid>
 
-      <Grid size={5}>
+      <Grid size={2}>
+        <TextField
+          select
+          fullWidth
+          size="small"
+          label={t("vacancies.form.labels.operator")}
+          value={operator}
+          disabled={!attributeId}
+          onChange={(e) => onChange("operator", e.target.value)}
+        >
+          {getOperators().map((item) => (
+            <MenuItem key={item} value={item}>
+              {item}
+            </MenuItem>
+          ))}
+        </TextField>
+      </Grid>
+
+      <Grid size={6}>
         {!currentAttribute && (
           <TextField
-            label={t("vacancies.form.labels.value_text")}
-            disabled
             fullWidth
             size="small"
+            disabled
+            label={t("vacancies.form.labels.value_text")}
             placeholder={t("vacancies.form.labels.select_placeholder")}
+          />
+        )}
+
+        {currentAttribute?.type === "STRING" && (
+          <TextField
+            fullWidth
+            size="small"
+            label={t("vacancies.form.labels.value_text")}
+            value={value}
+            onChange={(e) => onChange("value", e.target.value)}
+          />
+        )}
+
+        {currentAttribute?.type === "TEXT" && (
+          <TextField
+            fullWidth
+            multiline
+            rows={3}
+            size="small"
+            label={t("vacancies.form.labels.value_text")}
+            value={value}
+            onChange={(e) => onChange("value", e.target.value)}
           />
         )}
 
         {currentAttribute?.type === "NUMERIC" && (
           <TextField
-            label={t("vacancies.form.labels.value_number")}
+            fullWidth
             type="number"
+            size="small"
+            label={t("vacancies.form.labels.value_number")}
             value={value}
             onChange={(e) => onChange("value", e.target.value)}
-            fullWidth
-            size="small"
           />
         )}
 
-        {(currentAttribute?.type === "STRING" ||
-          currentAttribute?.type === "TEXT") && (
+        {currentAttribute?.type === "DATE" && (
           <TextField
-            label={t("vacancies.form.labels.value_text")}
+            fullWidth
+            type="date"
+            size="small"
+            slotProps={{
+              inputLabel: {
+                shrink: true,
+              },
+            }}
+            label={t("vacancies.form.labels.value_date")}
             value={value}
             onChange={(e) => onChange("value", e.target.value)}
-            fullWidth
-            size="small"
           />
         )}
 
         {currentAttribute?.type === "BOOLEAN" && (
           <TextField
             select
+            fullWidth
+            size="small"
             label={t("vacancies.form.labels.value_boolean")}
             value={value}
             onChange={(e) => onChange("value", e.target.value)}
-            fullWidth
-            size="small"
           >
             <MenuItem value="true">
               {t("vacancies.form.labels.boolean_yes")}
             </MenuItem>
+
             <MenuItem value="false">
               {t("vacancies.form.labels.boolean_no")}
             </MenuItem>
@@ -89,11 +179,11 @@ export function RequirementRow({
         {currentAttribute?.type === "DROPDOWN" && (
           <TextField
             select
+            fullWidth
+            size="small"
             label={t("vacancies.form.labels.value_dropdown")}
             value={value}
             onChange={(e) => onChange("value", e.target.value)}
-            fullWidth
-            size="small"
           >
             {currentAttribute.options?.map((option) => (
               <MenuItem key={option} value={option}>
@@ -104,8 +194,13 @@ export function RequirementRow({
         )}
       </Grid>
 
-      <Grid size={2} sx={{ textAlign: "right" }}>
-        <IconButton color="error" onClick={onRemove}>
+      <Grid size={1} sx={{ textAlign: "right" }}>
+        <IconButton
+          className="delete-btn"
+          color="error"
+          onClick={onRemove}
+          aria-label={t("vacancies.form.labels.delete_requirement")}
+        >
           <DeleteIcon />
         </IconButton>
       </Grid>

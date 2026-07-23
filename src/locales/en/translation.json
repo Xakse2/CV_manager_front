@@ -1,4 +1,14 @@
 {
+  "common": {
+    "add": "Add",
+    "edit": "Edit",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "buttons": {
+      "back": "Back to list"
+    }
+  },
   "attributes": {
     "title": "Attribute Library",
     "error_loading": "Failed to load attributes",
@@ -7,6 +17,7 @@
       "name": "Name",
       "category": "Category",
       "data_type": "Data Type",
+      "is_system": "System Attribute",
       "option_placeholder": "Option value",
       "add_button": "Add",
       "submit_button": "Create attributes"
@@ -15,23 +26,27 @@
       "name": "Name",
       "category": "Category",
       "type": "Type",
+      "is_system": "System",
       "options": "Options",
       "actions": "Actions"
-    }
-  },
-  "common": {
-    "buttons": {
-      "back": "Back to list"
     }
   },
   "vacancies": {
     "title": "Vacancies List",
     "create_title": "Create New Vacancy",
     "create_button": "Create Vacancy",
+    "edit_button": "Edit",
+    "update_button": "Update Vacancy",
+    "apply": "Apply",
+    "back_to_list": "Back to list",
+    "description_title": "Description",
+    "error_fetching": "Error fetching vacancy",
     "empty_list": "No vacancies found. It's time to create the first one!",
     "loading_error": "Error loading attributes.",
+    "no_attributes": "No template attributes assigned",
     "requirements_title": "Vacancy Requirements",
     "no_requirements": "No requirements added yet. Click the button to add the first one.",
+    "template_attributes_title": "Template Attributes",
     "form": {
       "main_info": "Main Information",
       "title": "Vacancy Title",
@@ -42,8 +57,11 @@
       "requirements_placeholder": "Requirements Builder (Attributes will be connected here)",
       "submit": "Save Vacancy",
       "labels": {
+        "add_attribute": "Add attribute",
         "add_requirement": "Add requirement",
         "attribute": "Attribute",
+        "operator": "Operator",
+        "required": "Required",
         "select_placeholder": "Select attribute...",
         "value_text": "Value (text)",
         "value_number": "Value (number)",
@@ -91,6 +109,8 @@
     }
   },
   "profile": {
+    "tech_stack": "Tech Stack",
+    "tech_stack_empty": "No tech stack added yet.",
     "fields": {
       "first_name": "First Name",
       "last_name": "Last Name",
@@ -100,6 +120,31 @@
       "edit": "Edit Profile",
       "cancel": "Cancel",
       "save": "Save Changes"
+    },
+    "attributes": {
+      "title": "User Attributes",
+      "add": "Add Attribute",
+      "attribute": "Attribute",
+      "empty": "No attributes specified yet."
+    },
+    "projects": {
+      "title": "Projects",
+      "name": "Project Name",
+      "start": "Start Date",
+      "end": "End Date",
+      "description": "Description",
+      "tags": "Tags"
+    },
+    "cvs": {
+      "title": "CVs",
+      "create": "Create CV",
+      "empty": "No CVs created yet."
+    },
+    "errors": {
+      "first_name_required": "First name is required",
+      "last_name_required": "Last name is required",
+      "email_required": "Email is required",
+      "email_invalid": "Invalid email address"
     }
   }
 }

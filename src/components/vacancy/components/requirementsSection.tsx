@@ -30,13 +30,14 @@ export function RequirementsSection({
           mb: 2,
         }}
       >
-        <Typography variant="subtitle1" sx={{ fontWeight: "medium" }}>
+        <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
           {t("vacancies.requirements_title")}
         </Typography>
+
         <Button
-          startIcon={<AddIcon />}
-          size="small"
           variant="outlined"
+          size="small"
+          startIcon={<AddIcon />}
           onClick={onAdd}
         >
           {t("vacancies.form.labels.add_requirement")}
@@ -53,17 +54,30 @@ export function RequirementsSection({
           {t("vacancies.no_requirements")}
         </Typography>
       ) : (
-        <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
-          {requirements.map((requirement, index) => (
-            <RequirementRow
-              key={index}
-              attributeId={requirement.attributeId}
-              value={requirement.value}
-              allAttributes={availableAttributes}
-              onChange={(key, val) => onChange(index, key, val)}
-              onRemove={() => onRemove(index)}
-            />
-          ))}
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            gap: 2,
+          }}
+        >
+          {requirements.map((requirement, index) => {
+            const itemKey = requirement.attributeId
+              ? `${requirement.attributeId}-${index}`
+              : `req-${index}`;
+
+            return (
+              <RequirementRow
+                key={itemKey}
+                attributeId={requirement.attributeId}
+                operator={requirement.operator}
+                value={requirement.value}
+                allAttributes={availableAttributes}
+                onChange={(key, value) => onChange(index, key, value)}
+                onRemove={() => onRemove(index)}
+              />
+            );
+          })}
         </Box>
       )}
     </Box>

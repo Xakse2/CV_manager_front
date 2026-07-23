@@ -1,16 +1,39 @@
-import type { SubmitEvent } from "react";
+import { useState, type SubmitEvent } from "react";
 import { Box, Button, CircularProgress, Divider, Paper } from "@mui/material";
-import { Edit as EditIcon, Save as SaveIcon } from "@mui/icons-material";
+import {
+  Edit as EditIcon,
+  Save as SaveIcon,
+  Add as AddIcon,
+} from "@mui/icons-material";
 import type { TFunction } from "i18next";
+
 import type { ProfileFormData } from "../profile";
+import type { UserAttribute } from "../../../types/userAttribute";
+import type { Attribute } from "../../../types/attribute";
+import type { Project } from "../../../types/project";
+import type { CVListItem } from "../../../types/cv";
+
 import { ProfileFields } from "./profileFields";
 import { ProfileHeader } from "./profileHeader";
 import { TechStack } from "./techStack";
+import { UserAttributes } from "./userAttributes";
+import { AddUserAttributeDialog } from "./addUserAttributeDialog";
+import { ProjectsSection } from "./project/projectsSection";
+import { AddProjectDialog } from "./project/addProjectDialog";
+import { CvsSection } from "./cv/cvsSection";
 
 interface ProfileFormProps {
   formData: ProfileFormData;
   role: string;
   techStack: string[];
+
+  attributes: UserAttribute[];
+  libraryAttributes: Attribute[];
+
+  projects?: Project[];
+  cvs?: CVListItem[];
+  onCreateCV: () => void;
+
   errors: Partial<Record<keyof ProfileFormData, string>>;
   isLoading: boolean;
   isEditing: boolean;
@@ -27,6 +50,11 @@ export function ProfileForm({
   formData,
   role,
   techStack,
+  attributes,
+  libraryAttributes,
+  projects = [],
+  cvs = [],
+  onCreateCV,
   errors,
   isLoading,
   isEditing,
@@ -36,19 +64,22 @@ export function ProfileForm({
   onEdit,
   onCancel,
 }: ProfileFormProps) {
+  const [openAddDialog, setOpenAddDialog] = useState(false);
+  const [openProjectDialog, setOpenProjectDialog] = useState(false);
+
   return (
     <Box
       sx={{
-        maxWidth: 600,
+        maxWidth: 1000,
         mx: "auto",
-        px: 2,
+        px: { xs: 2, md: 4 },
         py: 4,
       }}
     >
       <Paper
         elevation={3}
         sx={{
-          p: 4,
+          p: { xs: 2, md: 4 },
           borderRadius: 3,
         }}
       >
@@ -56,9 +87,57 @@ export function ProfileForm({
           firstName={formData.firstName}
           lastName={formData.lastName}
           role={role}
+          email={formData.email}
         />
 
+        <Divider sx={{ my: 3 }} />
+
         <TechStack techStack={techStack} t={t} />
+
+        <Divider sx={{ my: 3 }} />
+
+        <UserAttributes attributes={attributes} t={t} />
+
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "flex-end",
+            mb: 3,
+          }}
+        >
+          <Button
+            variant="outlined"
+            startIcon={<AddIcon />}
+            onClick={() => setOpenAddDialog(true)}
+          >
+            {t("profile.attributes.add")}
+          </Button>
+        </Box>
+
+        <AddUserAttributeDialog
+          open={openAddDialog}
+          onClose={() => setOpenAddDialog(false)}
+          attributes={libraryAttributes}
+          userAttributes={attributes}
+          t={t}
+        />
+
+        <Divider sx={{ my: 3 }} />
+
+        <ProjectsSection
+          projects={projects}
+          onAdd={() => setOpenProjectDialog(true)}
+        />
+
+        <AddProjectDialog
+          open={openProjectDialog}
+          onClose={() => setOpenProjectDialog(false)}
+          t={t}
+        />
+
+        <Divider sx={{ my: 3 }} />
+
+        <CvsSection cvs={cvs} t={t} onCreate={onCreateCV} />
 
         <Divider sx={{ my: 3 }} />
 

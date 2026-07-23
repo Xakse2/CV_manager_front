@@ -5,12 +5,16 @@ import CircularProgress from "@mui/material/CircularProgress";
 import { Box, Button, Typography } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useTranslation } from "react-i18next";
+import { useGetAttributesQuery } from "../../store/slice/api/attributeApi";
 
 export function VacancyEditPage() {
-  const { id } = useParams();
+  const { id } = useParams<{ id: string }>();
   const { t } = useTranslation();
 
-  const { data: vacancy, isLoading } = useGetVacancyByIdQuery(id!);
+  const { data: attributes = [] } = useGetAttributesQuery();
+  const { data: vacancy, isLoading } = useGetVacancyByIdQuery(id ?? "", {
+    skip: !id,
+  });
 
   if (isLoading) {
     return (
@@ -20,16 +24,16 @@ export function VacancyEditPage() {
     );
   }
 
-  if (!vacancy) {
+  if (!vacancy || !id) {
     return (
       <Box sx={{ p: 4, textAlign: "center" }}>
         <Typography color="error" variant="h6">
           {t("vacancies.error_fetching")}
         </Typography>
         <Button
-          startIcon={<ArrowBackIcon />}
           component={Link}
-          to={"/vacancies"}
+          to="/vacancies"
+          startIcon={<ArrowBackIcon />}
           sx={{ mt: 2 }}
         >
           {t("vacancies.back_to_list")}
@@ -39,6 +43,10 @@ export function VacancyEditPage() {
   }
 
   return (
-    <VacancyForm mode="edit" initialData={vacancy} availableAttributes={[]} />
+    <VacancyForm
+      mode="edit"
+      initialData={vacancy}
+      availableAttributes={attributes}
+    />
   );
 }

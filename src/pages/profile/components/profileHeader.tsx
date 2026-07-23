@@ -4,14 +4,18 @@ interface ProfileHeaderProps {
   firstName: string;
   lastName: string;
   role: string;
+  email?: string;
 }
 
 export function ProfileHeader({
-  firstName,
-  lastName,
+  firstName = "",
+  lastName = "",
   role,
+  email,
 }: ProfileHeaderProps) {
-  const initials = `${firstName.charAt(0)}${lastName.charAt(0)}`.toUpperCase();
+  const firstInitial = firstName.trim().charAt(0);
+  const lastInitial = lastName.trim().charAt(0);
+  const initials = `${firstInitial}${lastInitial}`.toUpperCase() || "?";
 
   return (
     <Box
@@ -24,9 +28,9 @@ export function ProfileHeader({
     >
       <Avatar
         sx={{
-          width: 100,
-          height: 100,
-          fontSize: "2.5rem",
+          width: { xs: 80, md: 110 },
+          height: { xs: 80, md: 110 },
+          fontSize: { xs: "2rem", md: "2.5rem" },
           fontWeight: "bold",
           bgcolor: "primary.main",
           mb: 2,
@@ -39,9 +43,15 @@ export function ProfileHeader({
         {firstName} {lastName}
       </Typography>
 
-      <Typography variant="body2" color="text.secondary" sx={{ mt: 0.5 }}>
+      <Typography variant="body2" color="text.secondary">
         {role}
       </Typography>
+
+      {email && (
+        <Typography variant="body2" color="text.secondary" sx={{ mt: 0.5 }}>
+          {email}
+        </Typography>
+      )}
     </Box>
   );
 }
