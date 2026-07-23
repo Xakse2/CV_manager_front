@@ -64,9 +64,9 @@ export interface RequirementsSectionProps {
   availableAttributes: Attribute[];
   onAdd: () => void;
   onRemove: (index: number) => void;
-  onChange: (
+  onChange: <K extends "attributeId" | "value" | "operator">(
     index: number,
-    key: "attributeId" | "operator" | "value",
-    val: string | number | boolean | null
+    key: K,
+    value: any
   ) => void;
 }

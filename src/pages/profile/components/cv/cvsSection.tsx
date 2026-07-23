@@ -2,9 +2,10 @@ import { Box, Button, Typography } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import type { TFunction } from "i18next";
 import { CvCard } from "./cvCard";
+import type { CVListItem } from "../../../../types/cv";
 
 interface CvsSectionProps {
-  cvs: CV[];
+  cvs: CVListItem[];
   t: TFunction;
   onCreate: () => void;
 }
