@@ -7,13 +7,10 @@ import {
   Paper,
   Chip,
   Divider,
-  IconButton,
 } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import EditIcon from "@mui/icons-material/Edit";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import SendIcon from "@mui/icons-material/Send";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import { useGetVacancyByIdQuery } from "../../store/slice/api/vacancyApi";
@@ -24,7 +21,6 @@ export function VacancyDetailsPage() {
   const { id } = useParams<{ id: string }>();
   const { t } = useTranslation();
 
-  const [isLiked, setIsLiked] = useState(false);
   const [hasApplied, setHasApplied] = useState(false);
 
   const {
@@ -89,11 +85,6 @@ export function VacancyDetailsPage() {
       </Button>
 
       <Paper variant="outlined" sx={{ p: 4, borderRadius: 2, boxShadow: 1 }}>
-        <Box sx={{ position: "absolute", top: 16, right: 16 }}>
-          <IconButton color="error" onClick={() => setIsLiked(!isLiked)}>
-            {isLiked ? <FavoriteIcon /> : <FavoriteBorderIcon />}
-          </IconButton>
-        </Box>
         <Box
           sx={{
             display: "flex",

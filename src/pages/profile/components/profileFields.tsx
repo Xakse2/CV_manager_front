@@ -1,6 +1,6 @@
 import { Box, TextField } from "@mui/material";
 import type { TFunction } from "i18next";
-import type { ProfileFormData } from "../profile";
+import type { ProfileFormData } from "../../../hooks/useProfileForm";
 
 interface ProfileFieldsProps {
   formData: ProfileFormData;
