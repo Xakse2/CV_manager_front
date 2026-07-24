@@ -49,7 +49,7 @@ export const router = createBrowserRouter([
       {
         path: "cv/:id",
         element: (
-          <ProtectedRoute roles={["CANDIDATE"]}>
+          <ProtectedRoute roles={["CANDIDATE", "ADMIN"]}>
             <CvPage />
           </ProtectedRoute>
         ),
@@ -58,7 +58,7 @@ export const router = createBrowserRouter([
       {
         path: "vacancies",
         element: (
-          <ProtectedRoute roles={["RECRUITER", "CANDIDATE"]}>
+          <ProtectedRoute roles={["RECRUITER", "CANDIDATE", "ADMIN"]}>
             <VacanciesPage />
           </ProtectedRoute>
         ),
@@ -67,7 +67,7 @@ export const router = createBrowserRouter([
       {
         path: "vacancies/create",
         element: (
-          <ProtectedRoute roles={["RECRUITER"]}>
+          <ProtectedRoute roles={["RECRUITER", "ADMIN"]}>
             <CreateVacancyPage />
           </ProtectedRoute>
         ),
@@ -76,7 +76,7 @@ export const router = createBrowserRouter([
       {
         path: "vacancies/:id",
         element: (
-          <ProtectedRoute roles={["RECRUITER", "CANDIDATE"]}>
+          <ProtectedRoute roles={["RECRUITER", "CANDIDATE", "ADMIN"]}>
             <VacancyDetailsPage />
           </ProtectedRoute>
         ),
@@ -85,7 +85,7 @@ export const router = createBrowserRouter([
       {
         path: "vacancies/:id/edit",
         element: (
-          <ProtectedRoute roles={["RECRUITER"]}>
+          <ProtectedRoute roles={["RECRUITER", "ADMIN"]}>
             <VacancyEditPage />
           </ProtectedRoute>
         ),
@@ -94,7 +94,7 @@ export const router = createBrowserRouter([
       {
         path: "attributes",
         element: (
-          <ProtectedRoute roles={["ADMIN", "RECRUITER"]}>
+          <ProtectedRoute roles={["ADMIN", "RECRUITER", "ADMIN"]}>
             <AttributesPage />
           </ProtectedRoute>
         ),
