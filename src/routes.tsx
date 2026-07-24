@@ -58,7 +58,7 @@ export const router = createBrowserRouter([
       {
         path: "vacancies",
         element: (
-          <ProtectedRoute roles={["RECRUITER"]}>
+          <ProtectedRoute roles={["RECRUITER", "CANDIDATE"]}>
             <VacanciesPage />
           </ProtectedRoute>
         ),
@@ -76,7 +76,7 @@ export const router = createBrowserRouter([
       {
         path: "vacancies/:id",
         element: (
-          <ProtectedRoute roles={["RECRUITER"]}>
+          <ProtectedRoute roles={["RECRUITER", "CANDIDATE"]}>
             <VacancyDetailsPage />
           </ProtectedRoute>
         ),

@@ -5,6 +5,7 @@
     "save": "Save",
     "cancel": "Cancel",
     "delete": "Delete",
+    "create": "Create",
     "buttons": {
       "back": "Back to list"
     }
@@ -119,7 +120,8 @@
     "buttons": {
       "edit": "Edit Profile",
       "cancel": "Cancel",
-      "save": "Save Changes"
+      "save": "Save Changes",
+      "logout": "Logout"
     },
     "attributes": {
       "title": "User Attributes",
@@ -133,7 +135,8 @@
       "start": "Start Date",
       "end": "End Date",
       "description": "Description",
-      "tags": "Tags"
+      "tags": "Tags",
+      "empty": "No projects added yet."
     },
     "cvs": {
       "title": "CVs",
@@ -145,6 +148,12 @@
       "last_name_required": "Last name is required",
       "email_required": "Email is required",
       "email_invalid": "Invalid email address"
+    }
+  },
+  "cv": {
+    "create_dialog": {
+      "title": "Create CV",
+      "position_label": "Desired Position"
     }
   }
 }

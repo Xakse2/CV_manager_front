@@ -14,6 +14,8 @@ import {
   Box,
 } from "@mui/material";
 import { useTranslation } from "react-i18next";
+import { useCreateCVMutation } from "../../../../store/slice/api/cvApi";
+import { useGetVacanciesQuery } from "../../../../store/slice/api/vacancyApi";
 
 interface CreateCVDialogProps {
   open: boolean;
@@ -27,8 +29,8 @@ export function CreateCVDialog({ open, onClose }: CreateCVDialogProps) {
   const [positionId, setPositionId] = useState<string>("");
 
   const { data: positions = [], isLoading: isPositionsLoading } =
-    useGetPositionsQuery();
-  const [createCV, { isLoading: isCreating }] = useCreateCvMutation();
+    useGetVacanciesQuery();
+  const [createCV, { isLoading: isCreating }] = useCreateCVMutation();
 
   const handleResetAndClose = () => {
     setPositionId("");
@@ -70,9 +72,9 @@ export function CreateCVDialog({ open, onClose }: CreateCVDialogProps) {
                 onChange={(e) => setPositionId(e.target.value)}
                 disabled={isCreating}
               >
-                {positions.map((pos: { id: string; name: string }) => (
+                {positions.map((pos) => (
                   <MenuItem key={pos.id} value={pos.id}>
-                    {pos.name}
+                    {pos.title}{" "}
                   </MenuItem>
                 ))}
               </Select>
@@ -102,14 +104,4 @@ export function CreateCVDialog({ open, onClose }: CreateCVDialogProps) {
       </form>
     </Dialog>
   );
-}
-function useGetPositionsQuery(): {
-  data?: never[] | undefined;
-  isLoading: any;
-} {
-  throw new Error("Function not implemented.");
-}
-
-function useCreateCvMutation(): [any, { isLoading: any }] {
-  throw new Error("Function not implemented.");
 }
