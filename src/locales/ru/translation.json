@@ -80,7 +80,8 @@
       "attribute": "Атрибуты",
       "login": "Вход",
       "registration": "Регистрация",
-      "profile": "Профиль"
+      "profile": "Профиль",
+      "create_vacancy": "Создать вакансию"
     }
   },
   "login": {

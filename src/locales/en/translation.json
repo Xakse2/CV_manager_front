@@ -80,7 +80,8 @@
       "attribute": "Attributes",
       "login": "Login",
       "registration": "Registration",
-      "profile": "Profile"
+      "profile": "Profile",
+      "create_vacancy": "Create Vacancy"
     }
   },
   "login": {
