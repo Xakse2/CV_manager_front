@@ -7,21 +7,31 @@ export const vacanciesApi = createApi({
   baseQuery: baseQueryWithReauth,
   tagTypes: ["Vacancies"],
   endpoints: (builder) => ({
-    createVacancy: builder.mutation<void, CreateVacancyDto>({
+    createVacancy: builder.mutation<VacancyResponse, CreateVacancyDto>({
       query: (newVacancy) => ({
         url: "/vacancies",
         method: "POST",
         body: newVacancy,
       }),
+      invalidatesTags: [{ type: "Vacancies", id: "LIST" }],
     }),
+
     getVacancies: builder.query<VacancyResponse[], void>({
       query: () => "/vacancies",
-      providesTags: ["Vacancies"],
+      providesTags: (result) =>
+        result
+          ? [
+              ...result.map(({ id }) => ({ type: "Vacancies" as const, id })),
+              { type: "Vacancies", id: "LIST" },
+            ]
+          : [{ type: "Vacancies", id: "LIST" }],
     }),
+
     getVacancyById: builder.query<VacancyResponse, string>({
       query: (id) => `/vacancies/${id}`,
-      providesTags: ["Vacancies"],
+      providesTags: (_result, _error, id) => [{ type: "Vacancies", id }],
     }),
+
     updateVacancyById: builder.mutation<
       void,
       { id: string; vacancy: CreateVacancyDto }
@@ -31,7 +41,10 @@ export const vacanciesApi = createApi({
         method: "PUT",
         body: vacancy,
       }),
-      invalidatesTags: ["Vacancies"],
+      invalidatesTags: (_result, _error, { id }) => [
+        { type: "Vacancies", id },
+        { type: "Vacancies", id: "LIST" },
+      ],
     }),
   }),
 });

@@ -19,7 +19,6 @@ export const cvApi = createApi({
       query: (id) => ({
         url: `/cv/${id}`,
       }),
-
       providesTags: (_result, _error, id) => [{ type: "CV", id }],
     }),
 
@@ -29,8 +28,7 @@ export const cvApi = createApi({
         method: "POST",
         body,
       }),
-
-      invalidatesTags: ["CV"],
+      invalidatesTags: [{ type: "CV", id: "LIST" }],
     }),
 
     updateCVAttribute: builder.mutation<void, UpdateCVAttributeRequest>({
@@ -42,16 +40,45 @@ export const cvApi = createApi({
           value,
         },
       }),
-
       invalidatesTags: (_result, _error, { cvId }) => [
         { type: "CV", id: cvId },
+        { type: "CV", id: "LIST" },
       ],
     }),
+
     getMyCVs: builder.query<CVListItem[], void>({
       query: () => ({
         url: "/cv/me/list",
       }),
-      providesTags: ["CV"],
+      providesTags: (result) =>
+        result
+          ? [
+              ...result.map(({ id }) => ({ type: "CV" as const, id })),
+              { type: "CV", id: "LIST" },
+            ]
+          : [{ type: "CV", id: "LIST" }],
+    }),
+
+    publishCV: builder.mutation<void, string>({
+      query: (id) => ({
+        url: `/cv/${id}/publish`,
+        method: "PATCH",
+      }),
+      invalidatesTags: (_r, _e, id) => [
+        { type: "CV", id },
+        { type: "CV", id: "LIST" },
+      ],
+    }),
+
+    likeCV: builder.mutation<void, string>({
+      query: (cvId) => ({
+        url: `/cv/${cvId}/like`,
+        method: "POST",
+      }),
+      invalidatesTags: (_result, _error, cvId) => [
+        { type: "CV", id: cvId },
+        { type: "CV", id: "LIST" },
+      ],
     }),
   }),
 });
@@ -61,4 +88,6 @@ export const {
   useCreateCVMutation,
   useUpdateCVAttributeMutation,
   useGetMyCVsQuery,
+  usePublishCVMutation,
+  useLikeCVMutation,
 } = cvApi;

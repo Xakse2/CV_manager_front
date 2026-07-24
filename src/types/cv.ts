@@ -19,16 +19,11 @@ export interface CVDetailResponse {
   isPublished: boolean;
   version: number;
 
-  position: {
-    title: string;
-    company: string;
-  };
+  position: string;
+  candidate: string;
 
-  candidate: {
-    id: string;
-    firstName: string;
-    lastName: string;
-  };
+  likes: number;
+  likedByMe: boolean;
 
   attributes: CVVirtualAttribute[];
   projects: CVProjectData[];
